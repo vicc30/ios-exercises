@@ -11,6 +11,7 @@
 		779E2157283746C6003B553D /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779E2156283746C6003B553D /* ResultViewController.swift */; };
 		779E21592838508E003B553D /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779E21582838508E003B553D /* CalculatorBrain.swift */; };
 		779E215B283C0045003B553D /* BMI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779E215A283C0045003B553D /* BMI.swift */; };
+		779E215D283C0CE7003B553D /* Controllers in Resources */ = {isa = PBXBuildFile; fileRef = 779E215C283C0CE7003B553D /* Controllers */; };
 		AD0B9F7A230D61800065EFD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0B9F79230D61800065EFD9 /* AppDelegate.swift */; };
 		AD0B9F7C230D61800065EFD9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0B9F7B230D61800065EFD9 /* SceneDelegate.swift */; };
 		AD0B9F7E230D61800065EFD9 /* CalculateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0B9F7D230D61800065EFD9 /* CalculateViewController.swift */; };
@@ -25,6 +26,7 @@
 		779E2156283746C6003B553D /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResultViewController.swift; path = "BMI Calculator/Controllers/ResultViewController.swift"; sourceTree = SOURCE_ROOT; };
 		779E21582838508E003B553D /* CalculatorBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalculatorBrain.swift; path = "BMI Calculator/Controllers/CalculatorBrain.swift"; sourceTree = SOURCE_ROOT; };
 		779E215A283C0045003B553D /* BMI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BMI.swift; path = "BMI Calculator/Controllers/BMI.swift"; sourceTree = SOURCE_ROOT; };
+		779E215C283C0CE7003B553D /* Controllers */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Controllers; path = "BMI Calculator/Controllers"; sourceTree = SOURCE_ROOT; };
 		AD0B9F76230D61800065EFD9 /* BMI Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BMI Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD0B9F79230D61800065EFD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD0B9F7B230D61800065EFD9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		AD0B9F8F230D63EA0065EFD9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				779E215C283C0CE7003B553D /* Controllers */,
 				779E21582838508E003B553D /* CalculatorBrain.swift */,
 				779E215A283C0045003B553D /* BMI.swift */,
 			);
@@ -164,6 +167,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				779E215D283C0CE7003B553D /* Controllers in Resources */,
 				AD0B9F86230D61840065EFD9 /* LaunchScreen.storyboard in Resources */,
 				AD0B9F83230D61840065EFD9 /* Assets.xcassets in Resources */,
 				AD64359A2312D0BC00E22B00 /* README.md in Resources */,
