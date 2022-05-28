@@ -6,10 +6,16 @@
   //  Copyright © 2022 App Brewery. All rights reserved.
   //
 
-import Foundation
+import UIKit
+
+protocol WeatherManagerDelegate {
+  func didUpdateWeather(weather: WeatherModel)
+}
 
 struct WeatherManager {
   let weatherURL: String = "https://api.openweathermap.org/data/2.5/weather?appid=f07139de5168665d6bee4fde3a729a7c&units=metric"
+
+  var delegate: WeatherManagerDelegate?
 
   func fetchWeather(cityName: String) {
     let urlString: String = "\(weatherURL)&q=\(cityName)"
@@ -30,7 +36,9 @@ struct WeatherManager {
           return
         }
         if let safeData = data {
-          self.parseJSON(weatherData: safeData)
+          if let weather = self.parseJSON(weatherData: safeData) {
+            self.delegate?.didUpdateWeather(weather: weather)
+          }
         }
       }
 
@@ -40,15 +48,22 @@ struct WeatherManager {
 
   }
 
-  func parseJSON(weatherData: Data){
+  func parseJSON(weatherData: Data) -> WeatherModel? {
     let decoder = JSONDecoder()
     do {
       let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
-      print(decodedData.main.temp)
-      print(decodedData.weather[0])
+      let id = decodedData.weather[0].id
+      let temp = decodedData.main.temp
+      let name = decodedData.name
+
+      let weather = WeatherModel(conditionId: id, cityName: name, temp: temp)
+      return weather
     } catch {
       print(error)
+      return nil
     }
   }
+
+  
 
 }
