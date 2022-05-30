@@ -1,14 +1,16 @@
-//
-//  ViewController.swift
-//  Clima
-//
-//  Created by Angela Yu on 01/09/2019.
-//  Copyright © 2019 App Brewery. All rights reserved.
-//
+  //
+  //  ViewController.swift
+  //  Clima
+  //
+  //  Created by Angela Yu on 01/09/2019.
+  //  Copyright © 2019 App Brewery. All rights reserved.
+  //
 
 import UIKit
+import CoreLocation
 
-class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
+  //MARK: -  WeatherViewController
+class WeatherViewController: UIViewController {
 
   @IBOutlet weak var conditionImageView: UIImageView!
   @IBOutlet weak var temperatureLabel: UILabel!
@@ -16,19 +18,33 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
   @IBOutlet weak var searchTextField: UITextField!
 
   var weatherManager = WeatherManager()
+  let locationManager = CLLocationManager()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    searchTextField.delegate = self
+    locationManager.delegate = self
+    locationManager.requestWhenInUseAuthorization()
+    locationManager.requestLocation()
+
     weatherManager.delegate = self
+    searchTextField.delegate = self
   }
 
-  // Delegate to handle go on keyboard
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+  @IBAction func currentLocation(_ sender: UIButton) {
+    locationManager.requestLocation()
+  }
+
+}
+
+
+  //MARK: - UITextFieldDelegate
+extension WeatherViewController: UITextFieldDelegate {
+
+  @IBAction func searchPressed(_ sender: UIButton) {
+      // Close keyboard
     searchTextField.endEditing(true)
-    print(searchTextField.text!)
-    return true
+    weatherManager.fetchWeather(cityName:searchTextField.text!)
   }
 
   func textFieldDidEndEditing(_ textField: UITextField) {
@@ -49,11 +65,16 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     }
   }
 
-  @IBAction func searchPressed(_ sender: UIButton) {
-    // Close keyboard
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     searchTextField.endEditing(true)
-    weatherManager.fetchWeather(cityName:searchTextField.text!)
+    print(searchTextField.text!)
+    return true
   }
+
+}
+
+  //MARK: -  WeatherManagerDelegate
+extension WeatherViewController: WeatherManagerDelegate {
 
   func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
 
@@ -70,3 +91,22 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
 
 }
 
+//MARK: -  CLLocationManagerDelegate
+extension WeatherViewController: CLLocationManagerDelegate {
+
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    if let location = locations.last {
+      locationManager.stopUpdatingLocation()
+      let lat = location.coordinate.latitude
+      let lon = location.coordinate.longitude
+
+      self.weatherManager.fetchWeather(latitude: lat, longitude: lon)
+
+    }
+    print("got location data")
+  }
+
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print(error)
+  }
+}
