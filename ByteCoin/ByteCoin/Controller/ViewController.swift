@@ -9,19 +9,20 @@
 import UIKit
 
 //MARK: -  ViewController
-final class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+final class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, CoinManagerDelegate {
 
   @IBOutlet weak var currencyLabel: UILabel!
   @IBOutlet weak var bitcoinLabel: UILabel!
   @IBOutlet weak var currencyPicker: UIPickerView!
 
-  let coinManager = CoinManager()
+  var coinManager = CoinManager()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     currencyPicker.dataSource = self
     currencyPicker.delegate = self
+    coinManager.delegate = self
   }
 
   //MARK: -  UIPickerViewDataSource
@@ -41,6 +42,19 @@ final class ViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
     let currency: String = coinManager.currencyArray[row]
     coinManager.getCoinPrice(for: currency)
+  }
+
+  //MARK: - CoinManagerDelegate
+
+  func didUpdateWeather(_ coinManager: CoinManager, coin: CoinModel) {
+    DispatchQueue.main.async {
+      self.currencyLabel.text = coin.currency
+      self.bitcoinLabel.text = coin.priceString
+    }
+  }
+
+  func didFailWithError(_ error: Error) {
+    print(error)
   }
 }
 
