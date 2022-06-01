@@ -8,8 +8,8 @@
 
 import UIKit
 
-//MARK: -  ViewController
-final class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, CoinManagerDelegate {
+//MARK: -  CoinViewController
+final class CoinViewController: UIViewController {
 
   @IBOutlet weak var currencyLabel: UILabel!
   @IBOutlet weak var bitcoinLabel: UILabel!
@@ -24,8 +24,11 @@ final class ViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     currencyPicker.delegate = self
     coinManager.delegate = self
   }
+}
 
   //MARK: -  UIPickerViewDataSource
+extension CoinViewController: UIPickerViewDataSource {
+
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
@@ -34,7 +37,11 @@ final class ViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     return coinManager.currencyArray.count
   }
 
-  //MARK: -  UIPickerViewDelegate
+}
+
+//MARK: -  UIPickerViewDelegate
+extension CoinViewController: UIPickerViewDelegate {
+
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     return coinManager.currencyArray[row]
   }
@@ -43,8 +50,10 @@ final class ViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     let currency: String = coinManager.currencyArray[row]
     coinManager.getCoinPrice(for: currency)
   }
+}
 
-  //MARK: - CoinManagerDelegate
+//MARK: - CoinManagerDelegate
+extension CoinViewController: CoinManagerDelegate {
 
   func didUpdateWeather(_ coinManager: CoinManager, coin: CoinModel) {
     DispatchQueue.main.async {
@@ -57,4 +66,3 @@ final class ViewController: UIViewController, UIPickerViewDataSource, UIPickerVi
     print(error)
   }
 }
-
