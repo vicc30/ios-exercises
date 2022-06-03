@@ -8,41 +8,47 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-      ZStack {
-        Image("background")
-          .resizable()
-          .edgesIgnoringSafeArea(.all)
 
-        VStack {
-          Image("diceeLogo")
+  @State var leftDiceNumber: Int = 1
+  @State var rightDiceNumber: Int = 1
 
-          Spacer()
+  var body: some View {
+    ZStack {
+      Image("background")
+        .resizable()
+        .edgesIgnoringSafeArea(.all)
 
-          HStack {
-            DiceView(num: 1)
-            DiceView(num: 4)
-          }
-          .padding(.horizontal)
+      VStack {
+        Image("diceeLogo")
 
-          Spacer()
+        Spacer()
 
-          Button {
-            // Action
-          } label: {
-            Text("Roll")
-              .font(.system(size: 50))
-              .fontWeight(.heavy)
-              .foregroundColor(.white)
-              .padding(.horizontal)
-          }
-          .background(Color.red)
-
-          Spacer()
-
+        HStack {
+          DiceView(num: leftDiceNumber)
+          DiceView(num: rightDiceNumber)
         }
+        .padding(.horizontal)
+
+        Spacer()
+
+        Button {
+          self.leftDiceNumber = Int.random(in: 1...6)
+          self.rightDiceNumber = Int.random(in: 1...6)
+
+        } label: {
+          Text("Roll")
+            .font(.system(size: 50))
+            .fontWeight(.heavy)
+            .foregroundColor(.white)
+            .padding(.horizontal)
+        }
+        .background(Color.red)
+
+        Spacer()
+
       }
     }
+  }
 }
 
 struct DiceView: View {
@@ -58,9 +64,8 @@ struct DiceView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+  static var previews: some View {
+    ContentView()
+  }
 }
-
 
